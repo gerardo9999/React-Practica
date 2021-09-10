@@ -11,6 +11,15 @@ const initForm = {
 const CrudForm = ({createData,updateData,dataToEdit,setDataToEdit}) => {
     const [form, setForm] = useState(initForm)
 
+    useEffect(() => {
+        if (dataToEdit) {
+            setForm(dataToEdit)
+        } else {
+            setForm(initForm)
+        }
+        
+    }, [dataToEdit])
+
     const handleChange = (e) => {
         setForm({
             ...form, [e.target.name] : [e.target.value]
@@ -21,15 +30,13 @@ const CrudForm = ({createData,updateData,dataToEdit,setDataToEdit}) => {
         e.preventDefault();
         
         if (!form.name  || !form.type ) {
-            alert("Datis incompletos");
+            alert("Datails incompletos");
             return ;
         }
-
         if (form.id === null) {
-            // console.log(form);
             createData(form);
         }else{
-            updateData(form)
+            updateData(form);
         }
         handleReset();
     }
